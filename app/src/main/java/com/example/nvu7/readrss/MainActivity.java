@@ -13,10 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.module.RssService;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final List<Rss> items=new ArrayList<Rss>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -52,11 +56,52 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 try  {
-                    String response = RssService.getInstance().get24h();
+                    String title=null,description=null,link = null;
+                    Boolean isItem=false;
+                    XmlPullParser xmlPullParser = RssService.getInstance().getRss24h();
                     try {
-                        JSONObject a =new JSONObject(response);
-                        JSONObject b=a;
-                    } catch (JSONException e) {
+                        xmlPullParser.nextTag();
+                        while (xmlPullParser.next() != XmlPullParser.END_DOCUMENT) {
+                            int eventType = xmlPullParser.getEventType();
+
+                            String name = xmlPullParser.getName();
+                            if(name == null)
+                                continue;
+
+                            if(eventType == XmlPullParser.END_TAG) {
+                                continue;
+                            }
+
+                            if (eventType == XmlPullParser.START_TAG) {
+                                if(name.equalsIgnoreCase("item")) {
+                                    isItem=true;
+                                    continue;
+                                }
+                            }
+                            String result = "";
+                            if (xmlPullParser.next() == XmlPullParser.TEXT) {
+                                result = xmlPullParser.getText();
+                                xmlPullParser.nextTag();
+                            }
+                            if (name.equalsIgnoreCase("title")) {
+                                title = result;
+                            } else if (name.equalsIgnoreCase("link")) {
+                                link = result;
+                            } else if (name.equalsIgnoreCase("description")) {
+                                description = result;
+                            }
+                            if (title != null && link != null && description != null && isItem) {
+                                Rss item=new Rss(title,description,link);
+                                items.add(item);
+                                title = null;
+                                link = null;
+                                description = null;
+                                isItem = false;
+                            }
+                        }
+                    }
+
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 } catch (Exception e) {
@@ -65,6 +110,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
         thread.start();
+        List<Rss> b=items;
+          //new ProcessThread().start();
     }
 
     @Override

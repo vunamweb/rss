@@ -2,6 +2,8 @@ package com.example.nvu7.readrss.module;
 
 import com.example.nvu7.readrss.api.RssAPIUtils;
 
+import org.xmlpull.v1.XmlPullParser;
+
 /**
  * Created by nvu7 on 5/23/2018.
  */
@@ -16,8 +18,8 @@ public class RssService {
         }
         return mInstance;
     }
-    public String get24h()
+    public XmlPullParser getRss24h()
     {
-        return RssAPIUtils.read24H();
+        return RssAPIUtils.readRss24H();
     }
 }

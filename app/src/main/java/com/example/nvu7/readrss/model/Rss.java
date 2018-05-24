@@ -8,7 +8,7 @@ public class Rss {
     private String title;
     private String link;
     private String description;
-    public Rss(String title, String link, String description) {
+    public Rss(String title, String description, String link) {
         this.title = title;
         this.link = link;
         this.description = description;

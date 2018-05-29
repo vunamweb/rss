@@ -8,15 +8,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.nvu7.readrss.adapter.MyAdapter;
+import com.example.nvu7.readrss.core.DisplayRecyclerView;
 import com.example.nvu7.readrss.model.Rss;
-import com.example.nvu7.readrss.module.RssService;
-
-import org.xmlpull.v1.XmlPullParser;
+import com.example.nvu7.readrss.multithreading.ProcessThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         final List<Rss> items=new ArrayList<Rss>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        RecyclerView recyclerRss=(RecyclerView) findViewById(R.id.list_item);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -50,68 +52,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try  {
-                    String title=null,description=null,link = null;
-                    Boolean isItem=false;
-                    XmlPullParser xmlPullParser = RssService.getInstance().getRss24h();
-                    try {
-                        xmlPullParser.nextTag();
-                        while (xmlPullParser.next() != XmlPullParser.END_DOCUMENT) {
-                            int eventType = xmlPullParser.getEventType();
-
-                            String name = xmlPullParser.getName();
-                            if(name == null)
-                                continue;
-
-                            if(eventType == XmlPullParser.END_TAG) {
-                                continue;
-                            }
-
-                            if (eventType == XmlPullParser.START_TAG) {
-                                if(name.equalsIgnoreCase("item")) {
-                                    isItem=true;
-                                    continue;
-                                }
-                            }
-                            String result = "";
-                            if (xmlPullParser.next() == XmlPullParser.TEXT) {
-                                result = xmlPullParser.getText();
-                                xmlPullParser.nextTag();
-                            }
-                            if (name.equalsIgnoreCase("title")) {
-                                title = result;
-                            } else if (name.equalsIgnoreCase("link")) {
-                                link = result;
-                            } else if (name.equalsIgnoreCase("description")) {
-                                description = result;
-                            }
-                            if (title != null && link != null && description != null && isItem) {
-                                Rss item=new Rss(title,description,link);
-                                items.add(item);
-                                title = null;
-                                link = null;
-                                description = null;
-                                isItem = false;
-                            }
-                        }
-                    }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+        //get rss and show on recycle
+        new ProcessThread(items).start();
         List<Rss> b=items;
-          //new ProcessThread().start();
+        recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
+        recyclerRss.setAdapter(new MyAdapter(items));
     }
 
     @Override

@@ -6,4 +6,6 @@ package com.example.nvu7.readrss.common;
 
 public class Constants {
  public static String METHOD_GET="GET";
+ public static Boolean USE_HANDLER=false;
+
 }

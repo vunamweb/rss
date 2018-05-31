@@ -1,6 +1,8 @@
 package com.example.nvu7.readrss;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.nvu7.readrss.adapter.MyAdapter;
+import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.core.DisplayRecyclerView;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
@@ -25,14 +29,29 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+     Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final RecyclerView recyclerRss=(RecyclerView) findViewById(R.id.list_item);
+        if(Constants.USE_HANDLER)
+        {
+            //hander
+             handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    List<Rss> items=(ArrayList<Rss>) msg.obj;
+                    recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
+                    recyclerRss.setAdapter(new MyAdapter(items));
+                }
+            };
+            //
+        }
+
         final List<Rss> items=new ArrayList<Rss>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        RecyclerView recyclerRss=(RecyclerView) findViewById(R.id.list_item);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -53,10 +72,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //get rss and show on recycle
-        new ProcessThread(items).start();
-        List<Rss> b=items;
-        recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
-        recyclerRss.setAdapter(new MyAdapter(items));
+        new ProcessThread(items,handler).start();
+        //List<Rss> b=items;
+        if(!Constants.USE_HANDLER)
+        {
+            recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
+            recyclerRss.setAdapter(new MyAdapter(items));
+        }
     }
 
     @Override

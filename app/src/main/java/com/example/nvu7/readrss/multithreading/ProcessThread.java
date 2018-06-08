@@ -70,6 +70,7 @@ public class ProcessThread extends Thread {
                         isItem = false;
                     }
                 }
+                items.set(0,items.get(1));
                 if(Constants.USE_HANDLER)
                 {
                     Message msg = handler.obtainMessage(1, (ArrayList<Rss>) items);

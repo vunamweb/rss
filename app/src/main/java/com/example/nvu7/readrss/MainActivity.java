@@ -21,7 +21,11 @@ import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.core.DisplayRecyclerView;
 import com.example.nvu7.readrss.model.Rss;
+import com.example.nvu7.readrss.multithreading.ProcessAsyncTask;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity
      Handler handler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final RecyclerView recyclerRss=(RecyclerView) findViewById(R.id.list_item);
@@ -71,13 +75,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //get rss and show on recycle
-        new ProcessThread(items,handler).start();
-        //List<Rss> b=items;
-        if(!Constants.USE_HANDLER)
+        //if not use asynctask
+        if(!Constants.USE_ASYNcCTASK)
+           new ProcessThread(items,handler).start();
+        //else use asynctask
+        else
+           new ProcessAsyncTask(getApplicationContext(),recyclerRss).execute();
+        //if not use handler and asynctask
+        if(!Constants.USE_HANDLER && !Constants.USE_ASYNcCTASK)
         {
-            recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
-            recyclerRss.setAdapter(new MyAdapter(items));
+            try {
+                recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
+                recyclerRss.setAdapter(new MyAdapter(items));
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
         }
     }
 

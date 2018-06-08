@@ -6,15 +6,6 @@ package com.example.nvu7.readrss.common;
 
 public class Constants {
  public static String METHOD_GET="GET";
-public static Boolean USE_ASYNcCTASK=false;
-<<<<<<< .mine
  public static Boolean USE_HANDLER=true;
-
-
-=======
- public static Boolean USE_HANDLER=false;
  public static Boolean USE_ASYNcCTASK=false;
-
->>>>>>> .theirs
-
 }

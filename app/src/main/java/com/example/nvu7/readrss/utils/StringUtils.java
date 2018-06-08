@@ -48,7 +48,7 @@ public class StringUtils {
     {
         String cleanUrl=null;
         try {
-            cleanUrl =description.substring(description.indexOf("<br />") + 6, description.indexOf("/>"));
+            cleanUrl =description.substring(description.indexOf("<br />") + 6,description.length());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,12 +2,9 @@ package com.example.nvu7.readrss.multithreading;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.adapter.MyAdapter;
-import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.core.DisplayRecyclerView;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.module.RssService;
@@ -15,7 +12,6 @@ import com.example.nvu7.readrss.module.RssService;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 5/30/2018.
@@ -91,6 +87,6 @@ public class ProcessAsyncTask extends AsyncTask<Void, Integer, ArrayList<Rss>> {
     protected void onPostExecute(ArrayList<Rss> result)
     {
         this.recyclerRss.setLayoutManager(new DisplayRecyclerView(this.context).getLinear());
-        recyclerRss.setAdapter(new MyAdapter(result));
+        recyclerRss.setAdapter(new MyAdapter(result,this.context));
     }
 }

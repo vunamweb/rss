@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:text="TextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title" />
+        android:id="@+id/title"
+        android:layout_marginStart="144dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="144dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/imgRss"
+        app:layout_constraintLeft_toLeftOf="@+id/title" />
 
     <TextView
         android:text="TextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/description" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_menu_camera"
-        android:id="@+id/imgRss" />
-</LinearLayout>
+        android:id="@+id/description"
+        android:layout_marginTop="136dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="144dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="144dp" />
+</android.support.constraint.ConstraintLayout>

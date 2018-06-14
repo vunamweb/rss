@@ -18,8 +18,8 @@ public class RssService {
         }
         return mInstance;
     }
-    public XmlPullParser getRss24h()
+    public XmlPullParser getRss24h(String url)
     {
-        return RssAPIUtils.readRss24H();
+        return RssAPIUtils.readRss24H(url);
     }
 }

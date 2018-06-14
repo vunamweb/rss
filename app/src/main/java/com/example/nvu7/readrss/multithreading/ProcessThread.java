@@ -10,7 +10,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * Created by nvu7 on 5/24/2018.
@@ -19,17 +18,19 @@ import java.util.logging.Handler;
 public class ProcessThread extends Thread {
     private List<Rss> items;
     private android.os.Handler handler;
-    public ProcessThread(List<Rss> items, android.os.Handler handler)
+    private String url;
+    public ProcessThread(List<Rss> items, android.os.Handler handler,String url)
     {
         this.items=items;
         this.handler=handler;
+        this.url=url;
     }
     @Override
     public void run() {
         try  {
             String title=null,description=null,link = null;
             Boolean isItem=false;
-            XmlPullParser xmlPullParser = RssService.getInstance().getRss24h();
+            XmlPullParser xmlPullParser = RssService.getInstance().getRss24h(url);
             try {
                 xmlPullParser.nextTag();
                 while (xmlPullParser.next() != XmlPullParser.END_DOCUMENT) {

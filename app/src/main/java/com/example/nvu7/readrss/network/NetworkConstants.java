@@ -5,7 +5,11 @@ package com.example.nvu7.readrss.network;
  */
 
 public class NetworkConstants {
-  public static String RSS_24H="https://www.24h.com.vn/upload/rss/tintuctrongngay.rss";
+  public static final String RSS_24H="https://www.24h.com.vn/upload/rss/tintuctrongngay.rss";
+  public static final String RSS_24H_FOOTBALL="https://www.24h.com.vn/upload/rss/bongda.rss";
+  public static final String RSS_24H_WORLDCUP2018="https://www.24h.com.vn/upload/rss/worldcup2018.rss";
+
+
   //public static String RSS_24H="http://vunamweb.com/image.php";
   public static int TIME_TIMEOUT=15000;
 

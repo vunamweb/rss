@@ -1,6 +1,5 @@
 package com.example.nvu7.readrss.api;
 
-import com.example.nvu7.readrss.network.NetworkConstants;
 import com.example.nvu7.readrss.network.NetworkUtils;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -10,8 +9,7 @@ import org.xmlpull.v1.XmlPullParser;
  */
 
 public class RssAPIUtils {
-    public static XmlPullParser readRss24H()  {
-        String url= NetworkConstants.RSS_24H;
+    public static XmlPullParser readRss24H(String url)  {
         return NetworkUtils.getInstance().getRss(url);
         //return NetworkUtils.getInstance().getResponse(url,null);
     }

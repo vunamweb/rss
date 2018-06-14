@@ -8,6 +8,7 @@ import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.core.DisplayRecyclerView;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.module.RssService;
+import com.example.nvu7.readrss.network.NetworkConstants;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -33,7 +34,7 @@ public class ProcessAsyncTask extends AsyncTask<Void, Integer, ArrayList<Rss>> {
         try  {
             String title=null,description=null,link = null;
             Boolean isItem=false;
-            XmlPullParser xmlPullParser = RssService.getInstance().getRss24h();
+            XmlPullParser xmlPullParser = RssService.getInstance().getRss24h(NetworkConstants.RSS_24H);
             try {
                 xmlPullParser.nextTag();
                 while (xmlPullParser.next() != XmlPullParser.END_DOCUMENT) {

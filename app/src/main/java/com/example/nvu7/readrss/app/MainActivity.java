@@ -1,4 +1,4 @@
-package com.example.nvu7.readrss;
+package com.example.nvu7.readrss.app;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,17 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.common.Constants;
-import com.example.nvu7.readrss.core.DisplayRecyclerView;
+import com.example.nvu7.readrss.core.RecycleView.Display;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessAsyncTask;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final RecyclerView recyclerRss=(RecyclerView) findViewById(R.id.list_item);
+        //recyclerRss.setOnClickListener();
         if(Constants.USE_HANDLER)
         {
             //hander
@@ -47,8 +45,8 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void handleMessage(Message msg) {
                     List<Rss> items=(ArrayList<Rss>) msg.obj;
-                    recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
-                    recyclerRss.setAdapter(new MyAdapter(items));
+                    recyclerRss.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                    recyclerRss.setAdapter(new MyAdapter(items,MainActivity.this));
                 }
             };
             //
@@ -85,10 +83,10 @@ public class MainActivity extends AppCompatActivity
         if(!Constants.USE_HANDLER && !Constants.USE_ASYNcCTASK)
         {
             try {
-                recyclerRss.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
-                recyclerRss.setAdapter(new MyAdapter(items));
+                recyclerRss.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                recyclerRss.setAdapter(new MyAdapter(items,MainActivity.this));
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }

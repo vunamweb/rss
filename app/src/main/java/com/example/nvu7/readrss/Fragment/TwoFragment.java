@@ -67,8 +67,8 @@ public class TwoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.content_main, container, false);
-        recyclerView=(RecyclerView) view.findViewById(R.id.list_item);
+        View view=inflater.inflate(R.layout.content_main2, container, false);
+        recyclerView=(RecyclerView) view.findViewById(R.id.list_item2);
         mListener.getListNewsRss24h(this, NetworkConstants.RSS_24H_WORLDCUP2018);
         // Inflate the layout for this fragment
         return view;

@@ -130,7 +130,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 OneFragment fragmentUse1 = (OneFragment) fragment;
                 recyclerView = fragmentUse1.recyclerView;
                 break;
-            case NetworkConstants.RSS_24H_FOOTBALL :
+            case NetworkConstants.RSS_24H_WORLDCUP2018 :
                  TwoFragment fragmentUse2 = (TwoFragment) fragment;
                  recyclerView = fragmentUse2.recyclerView;
                  break;
@@ -145,7 +145,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             public void handleMessage(Message msg) {
                 List<Rss> items = (ArrayList<Rss>) msg.obj;
                 recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
-                recyclerView.setAdapter(new MyAdapter(items, getApplicationContext()));
+                recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
             }
         };
         //

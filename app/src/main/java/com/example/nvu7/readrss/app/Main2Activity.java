@@ -27,7 +27,7 @@ import com.example.nvu7.readrss.Fragment.TwoFragment;
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
-import com.example.nvu7.readrss.core.DisplayRecyclerView;
+import com.example.nvu7.readrss.core.RecycleView.Display;
 import com.example.nvu7.readrss.core.ViewPager.SetupViewPager;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
@@ -144,7 +144,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             @Override
             public void handleMessage(Message msg) {
                 List<Rss> items = (ArrayList<Rss>) msg.obj;
-                recyclerView.setLayoutManager(new DisplayRecyclerView(getApplicationContext()).getLinear());
+                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
                 recyclerView.setAdapter(new MyAdapter(items, getApplicationContext()));
             }
         };

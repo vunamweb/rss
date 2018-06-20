@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nvu7 on 5/24/2018.
+ * Created by nvu7 on 6/20/2018.
  */
 
-public class ProcessThread extends Thread {
+public class ProcessThreadTest extends Thread {
+    private List<Rss> items;
     private android.os.Handler handler;
     private String url;
-    public ProcessThread(android.os.Handler handler,String url)
+    public ProcessThreadTest(List<Rss> items, android.os.Handler handler,String url)
     {
+        this.items=items;
         this.handler=handler;
         this.url=url;
     }
@@ -28,7 +30,6 @@ public class ProcessThread extends Thread {
         try  {
             String title=null,description=null,link = null;
             Boolean isItem=false;
-            List<Rss> items=new ArrayList<Rss>();
             XmlPullParser xmlPullParser = RssService.getInstance().getRss24h(url);
             try {
                 xmlPullParser.nextTag();

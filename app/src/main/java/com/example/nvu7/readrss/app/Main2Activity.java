@@ -44,6 +44,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private ViewPager viewPager;
     private TabLayout tabLayout;
     Handler handler;
+    Handler handler1;
+    Handler handler2;
+
     final List<Rss> items = new ArrayList<Rss>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -129,27 +132,60 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             case NetworkConstants.RSS_24H:
                 OneFragment fragmentUse1 = (OneFragment) fragment;
                 recyclerView = fragmentUse1.recyclerView;
+                //hander
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        List<Rss> items = (ArrayList<Rss>) msg.obj;
+                        recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                        recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                    }
+                };
+                //
+                new ProcessThread(items, handler, url).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
                  TwoFragment fragmentUse2 = (TwoFragment) fragment;
                  recyclerView = fragmentUse2.recyclerView;
+                //hander
+                handler1 = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        List<Rss> items = (ArrayList<Rss>) msg.obj;
+                        recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                        recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                    }
+                };
+                //
+                new ProcessThread(items, handler1, url).start();
                  break;
              default:
                  ThreeFragment fragmentUse3 = (ThreeFragment) fragment;
                  recyclerView = fragmentUse3.recyclerView;
+                 //hander
+                 handler2 = new Handler() {
+                     @Override
+                     public void handleMessage(Message msg) {
+                         List<Rss> items = (ArrayList<Rss>) msg.obj;
+                         recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                         recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                     }
+                 };
+                 //
+                 new ProcessThread(items, handler2, url).start();
                  break;
         }
-        //hander
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                List<Rss> items = (ArrayList<Rss>) msg.obj;
-                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
-                recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
-            }
-        };
-        //
-        new ProcessThread(items, handler, url).start();
+//        //hander
+//        handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                List<Rss> items = (ArrayList<Rss>) msg.obj;
+//                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+//                recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+//            }
+//        };
+//        //
+//        new ProcessThread(items, handler, url).start();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -22,7 +22,7 @@ import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.core.RecycleView.Display;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessAsyncTask;
-import com.example.nvu7.readrss.multithreading.ProcessThread;
+import com.example.nvu7.readrss.multithreading.ProcessThreadTest;
 import com.example.nvu7.readrss.network.NetworkConstants;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //if not use asynctask
         if(!Constants.USE_ASYNcCTASK)
-           new ProcessThread(items,handler, NetworkConstants.RSS_24H).start();
+           new ProcessThreadTest(items,handler, NetworkConstants.RSS_24H).start();
         //else use asynctask
         else
            new ProcessAsyncTask(getApplicationContext(),recyclerRss).execute();

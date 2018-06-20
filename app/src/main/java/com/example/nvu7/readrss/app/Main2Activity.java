@@ -43,11 +43,10 @@ import java.util.List;
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, InterfaceFragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private RecyclerView recyclerView;
     Handler handler;
-    Handler handler1;
-    Handler handler2;
 
-    final List<Rss> items = new ArrayList<Rss>();
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -58,6 +57,17 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        //hander
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                List<Rss> itemsTest = (ArrayList<Rss>) msg.obj;
+                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                recyclerView.setAdapter(new MyAdapter(itemsTest, Main2Activity.this));
+            }
+        };
+        //
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,11 +137,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void getListNewsRss24h(Fragment fragment, String url) {
-        final RecyclerView recyclerView;
         switch (url) {
             case NetworkConstants.RSS_24H:
-                OneFragment fragmentUse1 = (OneFragment) fragment;
-                recyclerView = fragmentUse1.recyclerView;
+                this.recyclerView = ((OneFragment) fragment).recyclerView;
+                new ProcessThread(handler, url).start();
                 //hander
                 handler = new Handler() {
                     @Override
@@ -145,8 +154,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 new ProcessThread(items, handler, url).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 TwoFragment fragmentUse2 = (TwoFragment) fragment;
-                 recyclerView = fragmentUse2.recyclerView;
+                 this.recyclerView = ((TwoFragment) fragment).recyclerView;
+                 new ProcessThread(handler, url).start();
                 //hander
                 handler1 = new Handler() {
                     @Override
@@ -175,17 +184,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                  new ProcessThread(items, handler2, url).start();
                  break;
         }
-//        //hander
-//        handler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                List<Rss> items = (ArrayList<Rss>) msg.obj;
-//                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
-//                recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
-//            }
-//        };
-//        //
-//        new ProcessThread(items, handler, url).start();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

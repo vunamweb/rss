@@ -1,8 +1,10 @@
 package com.example.nvu7.readrss.multithreading;
 
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.nvu7.readrss.common.Constants;
+import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.module.RssService;
 
@@ -18,10 +20,12 @@ import java.util.List;
 public class ProcessThread extends Thread {
     private android.os.Handler handler;
     private String url;
-    public ProcessThread(android.os.Handler handler,String url)
+    private RecyclerView recyclerView;
+    public ProcessThread(android.os.Handler handler,String url,RecyclerView recyclerView)
     {
         this.handler=handler;
         this.url=url;
+        this.recyclerView=recyclerView;
     }
     @Override
     public void run() {
@@ -73,7 +77,9 @@ public class ProcessThread extends Thread {
                 items.set(0,items.get(1));
                 if(Constants.USE_HANDLER)
                 {
-                    Message msg = handler.obtainMessage(1, (ArrayList<Rss>) items);
+                    //Message msg = handler.obtainMessage(1, (ArrayList<Rss>) items);
+                    Message msg = handler.obtainMessage();
+                    msg.obj=new HandlerMessage(items,recyclerView);
                     handler.sendMessage(msg);
                 }
             }

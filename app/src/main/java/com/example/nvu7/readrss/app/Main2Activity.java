@@ -29,6 +29,7 @@ import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 import com.example.nvu7.readrss.core.RecycleView.Display;
 import com.example.nvu7.readrss.core.ViewPager.SetupViewPager;
+import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
@@ -37,16 +38,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, InterfaceFragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private RecyclerView recyclerView;
     Handler handler;
-
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -62,7 +59,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                List<Rss> itemsTest = (ArrayList<Rss>) msg.obj;
+                HandlerMessage handlerMessage=(HandlerMessage) msg.obj;
+                List<Rss> itemsTest =handlerMessage.getItems() ;
+                RecyclerView recyclerView=handlerMessage.getRecyclerView();
                 recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
                 recyclerView.setAdapter(new MyAdapter(itemsTest, Main2Activity.this));
             }
@@ -139,16 +138,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void getListNewsRss24h(Fragment fragment, String url) {
         switch (url) {
             case NetworkConstants.RSS_24H:
-                this.recyclerView = ((OneFragment) fragment).recyclerView;
-                new ProcessThread(handler, url).start();
+                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 this.recyclerView = ((TwoFragment) fragment).recyclerView;
-                 new ProcessThread(handler, url).start();
+                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView).start();
                  break;
              default:
-                 ThreeFragment fragmentUse3 = (ThreeFragment) fragment;
-                 recyclerView = fragmentUse3.recyclerView;
+                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView).start();
                  break;
         }
 

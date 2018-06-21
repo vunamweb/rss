@@ -139,12 +139,45 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         switch (url) {
             case NetworkConstants.RSS_24H:
                 new ProcessThread(handler, url,((OneFragment) fragment).recyclerView).start();
+                //hander
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        List<Rss> items = (ArrayList<Rss>) msg.obj;
+                        recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                        recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                    }
+                };
+                //
+                new ProcessThread(items, handler, url).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
                  new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView).start();
+                //hander
+                handler1 = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        List<Rss> items = (ArrayList<Rss>) msg.obj;
+                        recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                        recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                    }
+                };
+                //
+                new ProcessThread(items, handler1, url).start();
                  break;
              default:
                  new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView).start();
+                 //hander
+                 handler2 = new Handler() {
+                     @Override
+                     public void handleMessage(Message msg) {
+                         List<Rss> items = (ArrayList<Rss>) msg.obj;
+                         recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
+                         recyclerView.setAdapter(new MyAdapter(items, Main2Activity.this));
+                     }
+                 };
+                 //
+                 new ProcessThread(items, handler2, url).start();
                  break;
         }
 

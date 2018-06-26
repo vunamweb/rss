@@ -2,6 +2,8 @@ package com.example.nvu7.readrss.model;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.example.nvu7.readrss.adapter.MyAdapter;
+
 import java.util.List;
 
 /**
@@ -11,10 +13,12 @@ import java.util.List;
 public class HandlerMessage {
   private List<Rss> items;
   private RecyclerView recyclerView;
+  private MyAdapter myAdapter;
 
-    public HandlerMessage(List<Rss> items, RecyclerView recyclerView) {
+    public HandlerMessage(List<Rss> items, RecyclerView recyclerView,MyAdapter myAdapter) {
         this.items = items;
         this.recyclerView = recyclerView;
+        this.myAdapter=myAdapter;
     }
 
     public List<Rss> getItems() {
@@ -23,5 +27,9 @@ public class HandlerMessage {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    public MyAdapter getMyAdapter() {
+        return myAdapter;
     }
 }

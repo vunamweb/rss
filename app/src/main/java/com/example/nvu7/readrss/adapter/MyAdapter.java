@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.app.DetailActivity;
@@ -34,6 +33,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
     {
         this.data = data;
         this.context=context;
+    }
+    public List<Rss> getData()
+    {
+        return data;
+    }
+    public void setData(List<Rss> data)
+    {
+        this.data=data;
     }
 
     @Override

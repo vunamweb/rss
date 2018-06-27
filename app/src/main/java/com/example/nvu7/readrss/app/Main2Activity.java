@@ -88,7 +88,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                     {
                                         loading = false;
                                         Log.v("...", "Last Item Wow !");
-                                        new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,myAdapter);
+                                        new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,myAdapter).start();
                                     }
                                 }
                             }

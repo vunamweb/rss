@@ -14,8 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 import com.example.nvu7.readrss.core.RecycleView.Display;
 import com.example.nvu7.readrss.core.ViewPager.SetupViewPager;
+import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
@@ -37,16 +40,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, InterfaceFragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private RecyclerView recyclerView;
     Handler handler;
-
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -62,9 +61,50 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                List<Rss> itemsTest = (ArrayList<Rss>) msg.obj;
-                recyclerView.setLayoutManager(new Display(getApplicationContext()).getLinear());
-                recyclerView.setAdapter(new MyAdapter(itemsTest, Main2Activity.this));
+                boolean loading = true;
+                HandlerMessage handlerMessage=(HandlerMessage) msg.obj;
+                //if is set data for recycleview
+                List<Rss> itemsTest =handlerMessage.getItems();
+                if(handlerMessage.getRecyclerView()!=null)
+                {
+                    RecyclerView recyclerView=handlerMessage.getRecyclerView();
+                    final LinearLayoutManager mLayoutManager=new Display(getApplicationContext()).getLinear();
+                    final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
+                    recyclerView.setAdapter(myAdapter);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            int pastVisiblesItems, visibleItemCount, totalItemCount;
+                            boolean loading = true;
+                            if(dy>0)
+                            {
+                                visibleItemCount = mLayoutManager.getChildCount();
+                                totalItemCount = mLayoutManager.getItemCount();
+                                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                                if (loading)
+                                {
+                                    if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                                    {
+                                        loading = false;
+                                        Log.v("...", "Last Item Wow !");
+                                        new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,myAdapter).start();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                //if is update data for recycleview
+                else
+                {
+                    MyAdapter myAdapter=handlerMessage.getMyAdapter();
+                    List<Rss> datas=myAdapter.getData();
+                    for(int i=0;i<itemsTest.size();i++)
+                        datas.add(itemsTest.get(i));
+                    myAdapter.setData(datas);
+                    myAdapter.notifyDataSetChanged();
+                }
             }
         };
         //
@@ -139,20 +179,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void getListNewsRss24h(Fragment fragment, String url) {
         switch (url) {
             case NetworkConstants.RSS_24H:
-                this.recyclerView = ((OneFragment) fragment).recyclerView;
-                new ProcessThread(handler, url).start();
+                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 this.recyclerView = ((TwoFragment) fragment).recyclerView;
-                 new ProcessThread(handler, url).start();
-                 break;
+                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView).start();
+                break;
              default:
-                 ThreeFragment fragmentUse3 = (ThreeFragment) fragment;
-                 recyclerView = fragmentUse3.recyclerView;
-                 //new ProcessThread(items, handler2, url).start();
-                 break;
+                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView).start();
         }
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

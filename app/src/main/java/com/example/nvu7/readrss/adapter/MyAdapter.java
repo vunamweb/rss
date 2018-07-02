@@ -57,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             case TYPE_FOOTER:
                 return new RecyclerViewHolderFooter(inflater.inflate(R.layout.list_footer, parent, false));
             case TYPE_HEADER:
-                return new RecyclerViewHolderFooter(inflater.inflate(R.layout.list_footer, parent, false));
+                return new RecyclerViewHolderFooter_1(inflater.inflate(R.layout.list_footer_1, parent, false));
             default:
                 return new RecyclerViewHolder(inflater.inflate(R.layout.list_item, parent, false));
         }
@@ -80,7 +80,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             });
         }
-
     }
 
     @Override
@@ -125,6 +124,13 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public RecyclerViewHolderFooter(View itemView) {
             super(itemView);
             progressBar=(ProgressBar) itemView.findViewById(R.id.progressBar);
+        }
+    }
+    public class RecyclerViewHolderFooter_1 extends RecyclerView.ViewHolder {
+        TextView textView;
+        public RecyclerViewHolderFooter_1(View itemView) {
+            super(itemView);
+            textView=(TextView) itemView.findViewById(R.id.textView2);
         }
     }
 }

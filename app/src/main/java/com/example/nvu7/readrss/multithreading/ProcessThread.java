@@ -88,7 +88,7 @@ public class ProcessThread extends Thread {
                     //Message msg = handler.obtainMessage(1, (ArrayList<Rss>) items);
                     Message msg = handler.obtainMessage();
                     msg.obj=new HandlerMessage(items,recyclerView,myAdapter);
-                    handler.sendMessage(msg);
+                    handler.sendMessageDelayed(msg,1000);
                 }
             }
 

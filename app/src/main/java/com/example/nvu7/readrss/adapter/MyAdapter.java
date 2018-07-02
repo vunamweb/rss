@@ -56,8 +56,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
               return new RecyclerViewHolder(inflater.inflate(R.layout.list_item, parent, false));
             case TYPE_FOOTER:
                 return new RecyclerViewHolderFooter(inflater.inflate(R.layout.list_footer, parent, false));
-            case TYPE_HEADER:
-                return new RecyclerViewHolderFooter_1(inflater.inflate(R.layout.list_footer_1, parent, false));
+            //case TYPE_HEADER:
+              //  return new RecyclerViewHolderFooter(inflater.inflate(R.layout.list_footer, parent, false));
             default:
                 return new RecyclerViewHolder(inflater.inflate(R.layout.list_item, parent, false));
         }
@@ -104,7 +104,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     private boolean isPositionFooter(int position) {
-        return position > data.size()-3;
+        return position > data.size()-2;
     }
 
 

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.network.NetworkConstants;
@@ -27,6 +28,7 @@ public class OneFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     public String type="1";
     public RecyclerView recyclerView;
+    public ProgressBar progressBar;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +72,7 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.content_main, container, false);
         recyclerView=(RecyclerView) view.findViewById(R.id.list_item);
+        progressBar=(ProgressBar) view.findViewById(R.id.progressBar2);
         mListener.getListNewsRss24h(this, NetworkConstants.RSS_24H);
         // Inflate the layout for this fragment
         return view;

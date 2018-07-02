@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.network.NetworkConstants;
@@ -27,6 +28,7 @@ public class ThreeFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     public String type="1";
     public RecyclerView recyclerView;
+    public ProgressBar progressBar;
 
     // TODO: Rename and change types of parameters
     private String mParam1;

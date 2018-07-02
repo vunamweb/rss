@@ -18,10 +18,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.nvu7.readrss.Fragment.InterfaceFragment;
 import com.example.nvu7.readrss.Fragment.OneFragment;
@@ -66,6 +66,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 HandlerMessage handlerMessage=(HandlerMessage) msg.obj;
                 //if is set data for recycleview
                 List<Rss> itemsTest =handlerMessage.getItems();
+                final ProgressBar progressBar=handlerMessage.getProgressBar();
                 if(handlerMessage.getRecyclerView()!=null)
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
@@ -77,16 +78,21 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     recyclerView.addItemDecoration(dividerItemDecoration);
                     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
                         @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                        }
+                        @Override
                         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                             int pastVisiblesItems, visibleItemCount, totalItemCount;
                             visibleItemCount = mLayoutManager.getChildCount();
                             totalItemCount = mLayoutManager.getItemCount();
                             pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
                             boolean loading = true;
-                            boolean loadingHeader=true;
+                            boolean loadingHeader=Application.getInstance().isLoadingHeader();
+                            //Log.v("...", "nambuuu !");
                             if(dy>0)
                             {
-                                loadingHeader=true;
+                                Application.getInstance().setLoadingHeader(true);
                                 if (loading)
                                 {
                                     if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
@@ -101,21 +107,30 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             {
                                 if(pastVisiblesItems==0 &&loadingHeader)
                                 {
-                                    loadingHeader=false;
-                                    Log.v("...", "Last Item Wow !");
+                                    Application.getInstance().setLoadingHeader(false);
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,myAdapter,progressBar).start();
                                 }
                             }
                         }
                     });
                 }
-                //if is update data for recycleview
-                else
+                //if is endless, then update data
+                else if(progressBar==null)
                 {
                     MyAdapter myAdapter=handlerMessage.getMyAdapter();
                     List<Rss> datas=myAdapter.getData();
                     for(int i=0;i<itemsTest.size();i++)
                         datas.add(itemsTest.get(i));
                     myAdapter.setData(datas);
+                    myAdapter.notifyDataSetChanged();
+                }
+                //if is scrool top
+                else
+                {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    MyAdapter myAdapter=handlerMessage.getMyAdapter();
+                    myAdapter.setData(itemsTest);
                     myAdapter.notifyDataSetChanged();
                 }
             }
@@ -192,13 +207,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void getListNewsRss24h(Fragment fragment, String url) {
         switch (url) {
             case NetworkConstants.RSS_24H:
-                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView).start();
+                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView,((OneFragment) fragment).progressBar).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView).start();
+                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView,((TwoFragment) fragment).progressBar).start();
                 break;
              default:
-                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView).start();
+                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView,((ThreeFragment) fragment).progressBar).start();
         }
     }
 

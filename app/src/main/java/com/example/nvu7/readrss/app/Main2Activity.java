@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -72,24 +73,36 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
                     recyclerView.setAdapter(myAdapter);
                     recyclerView.setLayoutManager(mLayoutManager);
+                    DividerItemDecoration dividerItemDecoration = new Display(recyclerView.getContext()).getDecoration();
+                    recyclerView.addItemDecoration(dividerItemDecoration);
                     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
                         @Override
                         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                             int pastVisiblesItems, visibleItemCount, totalItemCount;
+                            visibleItemCount = mLayoutManager.getChildCount();
+                            totalItemCount = mLayoutManager.getItemCount();
+                            pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
                             boolean loading = true;
+                            boolean loadingHeader=true;
                             if(dy>0)
                             {
-                                visibleItemCount = mLayoutManager.getChildCount();
-                                totalItemCount = mLayoutManager.getItemCount();
-                                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                                loadingHeader=true;
                                 if (loading)
                                 {
                                     if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
                                     {
                                         loading = false;
-                                        Log.v("...", "Last Item Wow !");
+                                        //Log.v("...", "Last Item Wow !");
                                         new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,myAdapter).start();
                                     }
+                                }
+                            }
+                            else if(dy<=0)
+                            {
+                                if(pastVisiblesItems==0 &&loadingHeader)
+                                {
+                                    loadingHeader=false;
+                                    Log.v("...", "Last Item Wow !");
                                 }
                             }
                         }

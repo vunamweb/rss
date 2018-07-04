@@ -47,5 +47,4 @@ abstract public class RecycleViewBasic {
         addScroll();
     }
     abstract public void  addScroll();
-
 }

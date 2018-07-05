@@ -69,13 +69,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 if(handlerMessage.getRecyclerView()!=null)
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
-                    final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
-                    AdapterRss a=new AdapterRss(itemsTest,getApplicationContext());
-                    a.setLayoutItem(R.layout.list_item)
+                    //final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
+                    AdapterRss myAdapter=new AdapterRss(itemsTest,getApplicationContext());
+                    myAdapter.setLayoutItem(R.layout.list_item)
                             .setLayoutFooter(R.layout.list_footer);
-
-
-
                     new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter,progressBar,handler).init();
                 }
                 //if is endless, then update data

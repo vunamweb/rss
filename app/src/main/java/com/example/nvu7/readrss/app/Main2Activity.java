@@ -28,7 +28,6 @@ import com.example.nvu7.readrss.Fragment.TwoFragment;
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
-import com.example.nvu7.readrss.core.Adapter.AdapterBasic;
 import com.example.nvu7.readrss.core.RecycleView.RecycleViewRss;
 import com.example.nvu7.readrss.core.ViewPager.SetupViewPager;
 import com.example.nvu7.readrss.model.HandlerMessage;
@@ -70,7 +69,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
                     final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
-                    AdapterBasic a=new AdapterBasic(itemsTest);
+                    //AdapterBasic a=new AdapterBasic(itemsTest);
                     new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter,progressBar,handler).init();
                 }
                 //if is endless, then update data

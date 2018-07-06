@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.app.Application;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
@@ -19,12 +18,25 @@ public class RecycleViewRss extends RecycleViewBasic {
 
     private ProgressBar progressBar;
     private Handler handler;
-    public RecycleViewRss(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter,ProgressBar progressBar,Handler handler) {
+
+    public RecycleViewRss(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
         super(context, recyclerView, adapter);
-        this.progressBar=progressBar;
-        this.handler=handler;
     }
 
+    public RecycleViewRss setProgressbar(ProgressBar progressbar)
+    {
+        this.progressBar=progressbar;
+        return this;
+    }
+
+    public RecycleViewRss setHandle(Handler handle)
+    {
+        this.handler=handle;
+        return this;
+    }
+
+
+    @Override
     public void  addScroll()
     {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -50,7 +62,7 @@ public class RecycleViewRss extends RecycleViewBasic {
                         {
                             loading = false;
                             //Log.v("...", "Last Item Wow !");
-                            new ProcessThread(handler, NetworkConstants.RSS_24H_WORLDCUP2018,(MyAdapter) adapter).start();
+                            new ProcessThread(handler, NetworkConstants.RSS_24H_WORLDCUP2018,adapter).start();
                         }
                     }
                 }
@@ -60,7 +72,7 @@ public class RecycleViewRss extends RecycleViewBasic {
                     {
                         Application.getInstance().setLoadingHeader(false);
                         progressBar.setVisibility(View.VISIBLE);
-                        new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,(MyAdapter) adapter,progressBar).start();
+                        new ProcessThread(handler,NetworkConstants.RSS_24H_WORLDCUP2018,adapter,progressBar).start();
                     }
                 }
             }

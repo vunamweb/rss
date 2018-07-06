@@ -4,7 +4,6 @@ import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
-import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
@@ -23,7 +22,7 @@ public class ProcessThread extends Thread {
     private android.os.Handler handler;
     private String url;
     private RecyclerView recyclerView;
-    private MyAdapter myAdapter;
+    private RecyclerView.Adapter myAdapter;
     private ProgressBar progressBar;
     public ProcessThread(android.os.Handler handler,String url,RecyclerView recyclerView,ProgressBar progressBar)
     {
@@ -32,13 +31,13 @@ public class ProcessThread extends Thread {
         this.recyclerView=recyclerView;
         this.progressBar=progressBar;
     }
-    public ProcessThread(android.os.Handler handler,String url,MyAdapter myAdapter)
+    public ProcessThread(android.os.Handler handler,String url,RecyclerView.Adapter myAdapter)
     {
         this.handler=handler;
         this.url=url;
         this.myAdapter=myAdapter;
     }
-    public ProcessThread(android.os.Handler handler,String url,MyAdapter myAdapter,ProgressBar progressBar)
+    public ProcessThread(android.os.Handler handler,String url,RecyclerView.Adapter myAdapter,ProgressBar progressBar)
     {
         this.handler=handler;
         this.url=url;

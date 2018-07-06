@@ -17,10 +17,21 @@ public class AdapterBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     protected static final int TYPE_HEADER = 0;
     protected static final int TYPE_ITEM = 1;
     protected static final int TYPE_FOOTER = 2;
+    protected int layoutItem;
+    protected int layoutFooter;
 
     public AdapterBasic(List<?> data, Context context) {
         this.data = data;
         this.context = context;
+    }
+
+    public List<?> getData()
+    {
+        return data;
+    }
+    public void setData(List<?> data)
+    {
+        this.data=data;
     }
 
     @Override

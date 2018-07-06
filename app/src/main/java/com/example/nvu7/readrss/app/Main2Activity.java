@@ -26,7 +26,6 @@ import com.example.nvu7.readrss.Fragment.OneFragment;
 import com.example.nvu7.readrss.Fragment.ThreeFragment;
 import com.example.nvu7.readrss.Fragment.TwoFragment;
 import com.example.nvu7.readrss.R;
-import com.example.nvu7.readrss.adapter.MyAdapter;
 import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 import com.example.nvu7.readrss.core.Adapter.AdapterRss;
 import com.example.nvu7.readrss.core.RecycleView.RecycleViewRss;
@@ -66,20 +65,25 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //if is set data for recycleview
                 List<Rss> itemsTest =handlerMessage.getItems();
                 final ProgressBar progressBar=handlerMessage.getProgressBar();
+                //if is get data for recycleview
                 if(handlerMessage.getRecyclerView()!=null)
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
                     //final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
-                    AdapterRss myAdapter=new AdapterRss(itemsTest,getApplicationContext());
-                    myAdapter.setLayoutItem(R.layout.list_item)
+                    AdapterRss myAdapter=new AdapterRss(itemsTest,Main2Activity.this)
+                            .setLayoutItem(R.layout.list_item)
                             .setLayoutFooter(R.layout.list_footer);
-                    new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter,progressBar,handler).init();
+                   //new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter,progressBar,handler).init();
+                    new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter)
+                            .setHandle(handler)
+                            .setProgressbar(progressBar)
+                            .init();
                 }
                 //if is endless, then update data
                 else if(progressBar==null)
                 {
-                    MyAdapter myAdapter=handlerMessage.getMyAdapter();
-                    List<Rss> datas=myAdapter.getData();
+                    AdapterRss myAdapter=(AdapterRss)handlerMessage.getMyAdapter();
+                    List<Rss> datas=(List<Rss>)myAdapter.getData();
                     for(int i=0;i<itemsTest.size();i++)
                         datas.add(itemsTest.get(i));
                     myAdapter.setData(datas);
@@ -89,7 +93,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 else
                 {
                     progressBar.setVisibility(View.INVISIBLE);
-                    MyAdapter myAdapter=handlerMessage.getMyAdapter();
+                    AdapterRss myAdapter=(AdapterRss)handlerMessage.getMyAdapter();
                     myAdapter.setData(itemsTest);
                     myAdapter.notifyDataSetChanged();
                 }

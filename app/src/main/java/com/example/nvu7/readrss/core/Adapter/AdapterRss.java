@@ -25,10 +25,9 @@ import java.util.List;
  */
 
 public class AdapterRss extends AdapterBasic {
-    private int layoutItem;
-    private int layoutFooter;
 
-    public AdapterRss(List<Rss> data, Context context) {
+
+    public AdapterRss(List<?> data, Context context) {
         super(data, context);
     }
 
@@ -44,7 +43,7 @@ public class AdapterRss extends AdapterBasic {
         return this;
     }
 
-    @Override
+
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -61,7 +60,7 @@ public class AdapterRss extends AdapterBasic {
         }
     }
 
-    @Override
+
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if(holder instanceof RecyclerViewHolder)

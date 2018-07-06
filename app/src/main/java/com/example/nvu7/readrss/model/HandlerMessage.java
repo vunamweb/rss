@@ -3,8 +3,6 @@ package com.example.nvu7.readrss.model;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
-import com.example.nvu7.readrss.adapter.MyAdapter;
-
 import java.util.List;
 
 /**
@@ -14,10 +12,10 @@ import java.util.List;
 public class HandlerMessage {
   private List<Rss> items;
   private RecyclerView recyclerView;
-  private MyAdapter myAdapter;
+  private RecyclerView.Adapter myAdapter;
   private ProgressBar progressBar;
 
-    public HandlerMessage(List<Rss> items, RecyclerView recyclerView,MyAdapter myAdapter,ProgressBar progressBar) {
+    public HandlerMessage(List<Rss> items, RecyclerView recyclerView,RecyclerView.Adapter myAdapter,ProgressBar progressBar) {
         this.items = items;
         this.recyclerView = recyclerView;
         this.myAdapter=myAdapter;
@@ -32,7 +30,7 @@ public class HandlerMessage {
         return recyclerView;
     }
 
-    public MyAdapter getMyAdapter() {
+    public RecyclerView.Adapter getMyAdapter() {
         return myAdapter;
     }
 

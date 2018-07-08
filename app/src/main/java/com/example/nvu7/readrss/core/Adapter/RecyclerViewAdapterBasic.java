@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Administrator on 7/4/2018.
  */
 
-public class AdapterBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapterBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected List<?> data;
     protected Context context;
@@ -20,9 +20,21 @@ public class AdapterBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     protected int layoutItem;
     protected int layoutFooter;
 
-    public AdapterBasic(List<?> data, Context context) {
+    public RecyclerViewAdapterBasic(List<?> data, Context context) {
         this.data = data;
         this.context = context;
+    }
+
+    public RecyclerViewAdapterBasic setLayoutItem(int layoutItem)
+    {
+        this.layoutItem=layoutItem;
+        return this;
+    }
+
+    public RecyclerViewAdapterBasic setLayoutFooter(int layoutFooter)
+    {
+        this.layoutFooter=layoutFooter;
+        return this;
     }
 
     public List<?> getData()

@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,10 +27,12 @@ import com.example.nvu7.readrss.Fragment.OneFragment;
 import com.example.nvu7.readrss.Fragment.ThreeFragment;
 import com.example.nvu7.readrss.Fragment.TwoFragment;
 import com.example.nvu7.readrss.R;
-import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
-import com.example.nvu7.readrss.core.Adapter.AdapterRss;
-import com.example.nvu7.readrss.core.RecycleView.RecycleViewRss;
-import com.example.nvu7.readrss.core.ViewPager.SetupViewPager;
+import com.example.nvu7.readrss.adapter.RecyclerViewAdapterRss;
+//import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
+import com.example.nvu7.readrss.core.Adapter.RecyclerViewAdapterBasic;
+import com.example.nvu7.readrss.core.Adapter.ViewPagerAdapterBaisc;
+import com.example.nvu7.readrss.view.RecycleViewRss;
+import com.example.nvu7.readrss.core.ViewPager.ViewPagerBasic;
 import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
@@ -70,19 +73,24 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
                     //final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
-                    AdapterRss myAdapter=new AdapterRss(itemsTest,Main2Activity.this)
+                    RecyclerViewAdapterBasic myAdapter=new RecyclerViewAdapterRss(itemsTest,Main2Activity.this)
                             .setLayoutItem(R.layout.list_item)
                             .setLayoutFooter(R.layout.list_footer);
+                    //myAdapter=(RecyclerViewAdapterRss)myAdapter;
                    //new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter,progressBar,handler).init();
-                    new RecycleViewRss(getApplicationContext(),recyclerView,myAdapter)
+                    ((RecycleViewRss)(new RecycleViewRss(getApplicationContext())
+                            .setTypeRotation(LinearLayoutManager.VERTICAL)
+                            .setAdapter(myAdapter)
+                            .setTypeLayoutItemDecoration(R.drawable.line_bottom_recycleview)))
                             .setHandle(handler)
                             .setProgressbar(progressBar)
+                            .into(recyclerView)
                             .init();
                 }
                 //if is endless, then update data
                 else if(progressBar==null)
                 {
-                    AdapterRss myAdapter=(AdapterRss)handlerMessage.getMyAdapter();
+                    RecyclerViewAdapterRss myAdapter=(RecyclerViewAdapterRss)handlerMessage.getMyAdapter();
                     List<Rss> datas=(List<Rss>)myAdapter.getData();
                     for(int i=0;i<itemsTest.size();i++)
                         datas.add(itemsTest.get(i));
@@ -93,7 +101,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 else
                 {
                     progressBar.setVisibility(View.INVISIBLE);
-                    AdapterRss myAdapter=(AdapterRss)handlerMessage.getMyAdapter();
+                    RecyclerViewAdapterRss myAdapter=(RecyclerViewAdapterRss)handlerMessage.getMyAdapter();
                     myAdapter.setData(itemsTest);
                     myAdapter.notifyDataSetChanged();
                 }
@@ -104,14 +112,25 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //setup adapter
+        // viewpager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        SetupViewPager.setupAdapter(viewPager, adapter);
 
-        //setup tablayout
+        //ViewPagerAdapter
+        ViewPagerAdapterBaisc adapter = new ViewPagerAdapterBaisc(getSupportFragmentManager());
+        adapter.addFragment(new OneFragment(), "ONE");
+        adapter.addFragment(new TwoFragment(), "TWO");
+        adapter.addFragment(new ThreeFragment(), "THREE");
+        //SetupViewPager.setupAdapter(viewPager, adapter);
+
+        //tablayout
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        SetupViewPager.setupTablayout(viewPager, tabLayout);
+        //SetupViewPager.setupTablayout(viewPager, tabLayout);
+
+        //setup viewpager
+        new ViewPagerBasic()
+                .setViewPagerAdapter(adapter)
+                .setTabLayout(tabLayout)
+                .into(viewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

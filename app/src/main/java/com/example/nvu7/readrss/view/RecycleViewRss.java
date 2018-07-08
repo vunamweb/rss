@@ -1,4 +1,4 @@
-package com.example.nvu7.readrss.core.RecycleView;
+package com.example.nvu7.readrss.view;
 
 import android.content.Context;
 import android.os.Handler;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.nvu7.readrss.app.Application;
+import com.example.nvu7.readrss.core.RecycleView.RecycleViewBasic;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
 
@@ -19,8 +20,8 @@ public class RecycleViewRss extends RecycleViewBasic {
     private ProgressBar progressBar;
     private Handler handler;
 
-    public RecycleViewRss(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
-        super(context, recyclerView, adapter);
+    public RecycleViewRss(Context context) {
+        super(context);
     }
 
     public RecycleViewRss setProgressbar(ProgressBar progressbar)

@@ -1,4 +1,8 @@
-package com.example.nvu7.readrss.adapter;
+package com.example.nvu7.readrss.core.Adapter;
+
+/**
+ * Created by Administrator on 7/8/2018.
+ */
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,15 +11,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by nvu7 on 6/13/2018.
  */
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapterBaisc extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager manager) {
+    public ViewPagerAdapterBaisc(FragmentManager manager) {
         super(manager);
     }
 
@@ -39,3 +44,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentTitleList.get(position);
     }
 }
+

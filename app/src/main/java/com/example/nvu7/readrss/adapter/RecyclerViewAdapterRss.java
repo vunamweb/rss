@@ -1,4 +1,4 @@
-package com.example.nvu7.readrss.core.Adapter;
+package com.example.nvu7.readrss.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.app.DetailActivity;
 import com.example.nvu7.readrss.common.Constants;
 import com.example.nvu7.readrss.core.Activity.Goto;
+import com.example.nvu7.readrss.core.Adapter.RecyclerViewAdapterBasic;
 import com.example.nvu7.readrss.core.LoadImg.ImgPicasso;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.utils.StringUtils;
@@ -24,25 +25,11 @@ import java.util.List;
  * Created by nvu7 on 7/5/2018.
  */
 
-public class AdapterRss extends AdapterBasic {
+public class RecyclerViewAdapterRss extends RecyclerViewAdapterBasic {
 
-
-    public AdapterRss(List<?> data, Context context) {
+    public RecyclerViewAdapterRss(List<?> data, Context context) {
         super(data, context);
     }
-
-    public AdapterRss setLayoutItem(int layoutItem)
-    {
-        this.layoutItem=layoutItem;
-        return this;
-    }
-
-    public AdapterRss setLayoutFooter(int layoutFooter)
-    {
-        this.layoutFooter=layoutFooter;
-        return this;
-    }
-
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

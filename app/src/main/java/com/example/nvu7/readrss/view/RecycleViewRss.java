@@ -59,6 +59,7 @@ public class RecycleViewRss extends RecycleViewBasic {
                     Application.getInstance().setLoadingHeader(true);
                     if (loading)
                     {
+                        //if is endless
                         if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
                         {
                             loading = false;
@@ -69,6 +70,7 @@ public class RecycleViewRss extends RecycleViewBasic {
                 }
                 else if(dy<=0)
                 {
+                    //if is top
                     if(pastVisiblesItems==0 &&loadingHeader)
                     {
                         Application.getInstance().setLoadingHeader(false);

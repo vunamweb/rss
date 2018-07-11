@@ -1,6 +1,7 @@
 package com.example.nvu7.readrss.multithreading;
 
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
@@ -24,12 +25,21 @@ public class ProcessThread extends Thread {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter myAdapter;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     public ProcessThread(android.os.Handler handler,String url,RecyclerView recyclerView,ProgressBar progressBar)
     {
         this.handler=handler;
         this.url=url;
         this.recyclerView=recyclerView;
         this.progressBar=progressBar;
+    }
+    public ProcessThread(android.os.Handler handler,String url,RecyclerView recyclerView,ProgressBar progressBar,SwipeRefreshLayout swipeRefreshLayout)
+    {
+        this.handler=handler;
+        this.url=url;
+        this.recyclerView=recyclerView;
+        this.progressBar=progressBar;
+        this.swipeRefreshLayout=swipeRefreshLayout;
     }
     public ProcessThread(android.os.Handler handler,String url,RecyclerView.Adapter myAdapter)
     {
@@ -96,7 +106,7 @@ public class ProcessThread extends Thread {
                 {
                     //Message msg = handler.obtainMessage(1, (ArrayList<Rss>) items);
                     Message msg = handler.obtainMessage();
-                    msg.obj=new HandlerMessage(items,recyclerView,myAdapter,progressBar);
+                    msg.obj=new HandlerMessage(items,recyclerView,myAdapter,progressBar,swipeRefreshLayout);
                     handler.sendMessageDelayed(msg,1000);
                 }
             }

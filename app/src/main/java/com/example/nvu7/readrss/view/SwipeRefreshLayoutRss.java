@@ -5,6 +5,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.nvu7.readrss.core.SwipeRefreshLayout.SwipeRefreshLayoutBasic;
+import com.example.nvu7.readrss.multithreading.ProcessThread;
+import com.example.nvu7.readrss.network.NetworkConstants;
 
 /**
  * Created by nvu7 on 7/11/2018.
@@ -31,7 +33,8 @@ public class SwipeRefreshLayoutRss extends SwipeRefreshLayoutBasic {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
+                new ProcessThread(handler, NetworkConstants.RSS_24H_WORLDCUP2018,adapter,swipeRefreshLayout).start();
+                //swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

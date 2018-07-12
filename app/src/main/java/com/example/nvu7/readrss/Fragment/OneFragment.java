@@ -75,7 +75,7 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.content_main, container, false);
         recyclerView=(RecyclerView) view.findViewById(R.id.list_item);
-        progressBar=(ProgressBar) view.findViewById(R.id.progressBar2);
+        progressBar=(ProgressBar) view.findViewById(R.id.progressBar);
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.contentView);
         mListener.getListNewsRss24h(this, NetworkConstants.RSS_24H);
         // Inflate the layout for this fragment

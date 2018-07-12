@@ -98,6 +98,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             .into(swipeRefreshLayout)
                             .init();
                 }
+                //if is swiperefersh
+                else if(handlerMessage.getSwipeRefreshLayout()!=null)
+                {
+                    RecyclerViewAdapterRss myAdapter=(RecyclerViewAdapterRss)handlerMessage.getMyAdapter();
+                    myAdapter.setData(itemsTest);
+                    myAdapter.notifyDataSetChanged();
+                    handlerMessage.getSwipeRefreshLayout().setRefreshing(false);
+                }
                 //if is endless, then update data
                 else if(progressBar==null)
                 {
@@ -205,10 +213,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 new ProcessThread(handler, url,((OneFragment) fragment).recyclerView,((OneFragment) fragment).progressBar,((OneFragment) fragment).swipeRefreshLayout).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView,((TwoFragment) fragment).progressBar).start();
+                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView,((TwoFragment) fragment).progressBar,((TwoFragment) fragment).swipeRefreshLayout).start();
                 break;
              default:
-                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView,((ThreeFragment) fragment).progressBar).start();
+                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView,((ThreeFragment) fragment).progressBar,((ThreeFragment) fragment).swipeRefreshLayout).start();
         }
     }
 

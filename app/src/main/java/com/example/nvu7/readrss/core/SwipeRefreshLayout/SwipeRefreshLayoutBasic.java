@@ -17,7 +17,7 @@ abstract public class SwipeRefreshLayoutBasic {
 
     public SwipeRefreshLayoutBasic setColor(int color1,int color2,int color3,int color4)
     {
-        swipeRefreshLayout.setColorSchemeColors(color1,color2,color3,color4);
+        //swipeRefreshLayout.setColorSchemeColors(color1,color2,color3,color4);
         return this;
     }
 

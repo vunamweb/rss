@@ -54,6 +54,13 @@ public class ProcessThread extends Thread {
         this.myAdapter=myAdapter;
         this.progressBar=progressBar;
     }
+    public ProcessThread(android.os.Handler handler,String url,RecyclerView.Adapter myAdapter,SwipeRefreshLayout swipeRefreshLayout)
+    {
+        this.handler=handler;
+        this.url=url;
+        this.myAdapter=myAdapter;
+        this.swipeRefreshLayout=swipeRefreshLayout;
+    }
     @Override
     public void run() {
         try  {

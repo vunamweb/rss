@@ -28,7 +28,7 @@
                 <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar2" android:visibility="invisible" />
+                android:id="@+id/progressBar" android:visibility="invisible" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_item"

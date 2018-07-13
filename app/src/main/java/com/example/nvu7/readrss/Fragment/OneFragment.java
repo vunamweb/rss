@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ public class OneFragment extends Fragment {
     public String type="1";
     public RecyclerView recyclerView;
     public ProgressBar progressBar;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,7 +75,8 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.content_main, container, false);
         recyclerView=(RecyclerView) view.findViewById(R.id.list_item);
-        progressBar=(ProgressBar) view.findViewById(R.id.progressBar2);
+        progressBar=(ProgressBar) view.findViewById(R.id.progressBar);
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.contentView);
         mListener.getListNewsRss24h(this, NetworkConstants.RSS_24H);
         // Inflate the layout for this fragment
         return view;

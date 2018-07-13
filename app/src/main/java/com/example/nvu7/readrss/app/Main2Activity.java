@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
+import com.example.nvu7.readrss.view.SwipeRefreshLayoutRss;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -69,9 +71,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 List<Rss> itemsTest =handlerMessage.getItems();
                 final ProgressBar progressBar=handlerMessage.getProgressBar();
                 //if is get data for recycleview
-                if(handlerMessage.getRecyclerView()!=null)
+                if(!handlerMessage.checkUpdateData())
                 {
                     RecyclerView recyclerView=handlerMessage.getRecyclerView();
+                    SwipeRefreshLayout swipeRefreshLayout=handlerMessage.getSwipeRefreshLayout();
                     //final MyAdapter myAdapter=new MyAdapter(itemsTest, Main2Activity.this);
                     RecyclerViewAdapterBasic myAdapter=new RecyclerViewAdapterRss(itemsTest,Main2Activity.this)
                             .setLayoutItem(R.layout.list_item)
@@ -86,6 +89,22 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             .setProgressbar(progressBar)
                             .into(recyclerView)
                             .init();
+
+                    //init swiper
+                    new SwipeRefreshLayoutRss()
+                            .setAdapter(myAdapter)
+                            .setHandler(handler)
+                            .setColor(234,456,678,789)
+                            .into(swipeRefreshLayout)
+                            .init();
+                }
+                //if is swiperefersh
+                else if(handlerMessage.getSwipeRefreshLayout()!=null)
+                {
+                    RecyclerViewAdapterRss myAdapter=(RecyclerViewAdapterRss)handlerMessage.getMyAdapter();
+                    myAdapter.setData(itemsTest);
+                    myAdapter.notifyDataSetChanged();
+                    handlerMessage.getSwipeRefreshLayout().setRefreshing(false);
                 }
                 //if is endless, then update data
                 else if(progressBar==null)
@@ -100,10 +119,11 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 //if is scrool top
                 else
                 {
+                    /*
                     progressBar.setVisibility(View.INVISIBLE);
                     RecyclerViewAdapterRss myAdapter=(RecyclerViewAdapterRss)handlerMessage.getMyAdapter();
                     myAdapter.setData(itemsTest);
-                    myAdapter.notifyDataSetChanged();
+                    myAdapter.notifyDataSetChanged();*/
                 }
             }
         };
@@ -190,13 +210,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void getListNewsRss24h(Fragment fragment, String url) {
         switch (url) {
             case NetworkConstants.RSS_24H:
-                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView,((OneFragment) fragment).progressBar).start();
+                new ProcessThread(handler, url,((OneFragment) fragment).recyclerView,((OneFragment) fragment).progressBar,((OneFragment) fragment).swipeRefreshLayout).start();
                 break;
             case NetworkConstants.RSS_24H_WORLDCUP2018 :
-                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView,((TwoFragment) fragment).progressBar).start();
+                 new ProcessThread(handler, url,((TwoFragment) fragment).recyclerView,((TwoFragment) fragment).progressBar,((TwoFragment) fragment).swipeRefreshLayout).start();
                 break;
              default:
-                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView,((ThreeFragment) fragment).progressBar).start();
+                 new ProcessThread(handler, url,((ThreeFragment) fragment).recyclerView,((ThreeFragment) fragment).progressBar,((ThreeFragment) fragment).swipeRefreshLayout).start();
         }
     }
 

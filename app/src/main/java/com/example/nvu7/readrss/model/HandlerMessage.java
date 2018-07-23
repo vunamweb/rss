@@ -27,7 +27,7 @@ public class HandlerMessage {
 
     public boolean checkUpdateData()
     {
-        return (recyclerView==null && swipeRefreshLayout==null);
+        return (recyclerView==null);
     }
     public List<Rss> getItems() {
         return items;

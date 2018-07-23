@@ -1,5 +1,6 @@
 package com.example.nvu7.readrss.core.ViewPager;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
@@ -10,11 +11,17 @@ import com.example.nvu7.readrss.core.Adapter.ViewPagerAdapterBaisc;
  * Created by Administrator on 7/6/2018.
  */
 
-public class ViewPagerBasic {
+abstract public class ViewPagerBasic {
 
   protected TabLayout tabLayout;
   protected ViewPager viewPager;
   protected ViewPagerAdapterBaisc viewPagerAdapter;
+  protected Context context;
+
+  public ViewPagerBasic(Context context)
+  {
+    this.context=context;
+  }
 
   public ViewPagerBasic setTabLayout(TabLayout tabLayout)
   {
@@ -33,6 +40,8 @@ public class ViewPagerBasic {
     this.viewPager=viewPager;
     viewPager.setAdapter(viewPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
+    setOnPageChangeListener();
     return this;
   }
+  abstract public void setOnPageChangeListener();
 }

@@ -32,16 +32,14 @@ import com.example.nvu7.readrss.Fragment.ThreeFragment;
 import com.example.nvu7.readrss.Fragment.TwoFragment;
 import com.example.nvu7.readrss.R;
 import com.example.nvu7.readrss.adapter.RecyclerViewAdapterRss;
-//import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 import com.example.nvu7.readrss.core.Adapter.RecyclerViewAdapterBasic;
 import com.example.nvu7.readrss.core.Adapter.ViewPagerAdapterBaisc;
-import com.example.nvu7.readrss.module.RssService;
-import com.example.nvu7.readrss.view.RecycleViewRss;
-import com.example.nvu7.readrss.core.ViewPager.ViewPagerBasic;
 import com.example.nvu7.readrss.model.HandlerMessage;
 import com.example.nvu7.readrss.model.Rss;
+import com.example.nvu7.readrss.module.RssService;
 import com.example.nvu7.readrss.multithreading.ProcessThread;
 import com.example.nvu7.readrss.network.NetworkConstants;
+import com.example.nvu7.readrss.view.RecycleViewRss;
 import com.example.nvu7.readrss.view.SwipeRefreshLayoutRss;
 import com.example.nvu7.readrss.view.ViewPagerRss;
 import com.google.android.gms.appindexing.Action;
@@ -50,6 +48,8 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
+
+//import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, InterfaceFragment {
     private ViewPager viewPager;
@@ -140,6 +140,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         // viewpager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -195,6 +197,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -216,7 +219,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             }
 
         });
+        //return true;
         return super.onCreateOptionsMenu(menu);
+        /*menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.user_2), getResources().getString(R.string.action_profile)));
+        menu.add(0, 2, 2, menuIconWithText(getResources().getDrawable(R.mipmap.add_user), getResources().getString(R.string.action_add_user)));
+        menu.add(0, 3, 3, menuIconWithText(getResources().getDrawable(R.mipmap.switch_profile), getResources().getString(R.string.action_switch_profile)));
+        menu.add(0, 4, 4, menuIconWithText(getResources().getDrawable(R.mipmap.logout), getResources().getString(R.string.action_sign_out)));
+        return true;*/
     }
 
     @Override

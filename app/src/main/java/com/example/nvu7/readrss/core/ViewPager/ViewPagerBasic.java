@@ -23,6 +23,10 @@ abstract public class ViewPagerBasic {
     this.context=context;
   }
 
+  public ViewPagerAdapterBaisc getViewPagerAdapter() {
+    return viewPagerAdapter;
+  }
+
   public ViewPagerBasic setTabLayout(TabLayout tabLayout)
   {
     this.tabLayout=tabLayout;

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.example.nvu7.readrss.model.Rss;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +16,7 @@ import java.util.List;
 public class RecyclerViewAdapterBasic extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected List<?> data;
+    protected List<?> copyData;
     protected Context context;
     protected static final int TYPE_HEADER = 0;
     protected static final int TYPE_ITEM = 1;
@@ -22,6 +26,7 @@ public class RecyclerViewAdapterBasic extends RecyclerView.Adapter<RecyclerView.
 
     public RecyclerViewAdapterBasic(List<?> data, Context context) {
         this.data = data;
+        this.copyData=data;
         this.context = context;
     }
 
@@ -39,11 +44,11 @@ public class RecyclerViewAdapterBasic extends RecyclerView.Adapter<RecyclerView.
 
     public List<?> getData()
     {
-        return data;
+        return copyData;
     }
     public void setData(List<?> data)
     {
-        this.data=data;
+        this.copyData=data;
     }
 
     @Override
@@ -58,7 +63,7 @@ public class RecyclerViewAdapterBasic extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return copyData.size();
     }
 
     @Override

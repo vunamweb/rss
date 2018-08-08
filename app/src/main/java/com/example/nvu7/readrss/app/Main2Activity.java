@@ -35,6 +35,7 @@ import com.example.nvu7.readrss.adapter.RecyclerViewAdapterRss;
 //import com.example.nvu7.readrss.adapter.ViewPagerAdapter;
 import com.example.nvu7.readrss.core.Adapter.RecyclerViewAdapterBasic;
 import com.example.nvu7.readrss.core.Adapter.ViewPagerAdapterBaisc;
+import com.example.nvu7.readrss.module.RssService;
 import com.example.nvu7.readrss.view.RecycleViewRss;
 import com.example.nvu7.readrss.core.ViewPager.ViewPagerBasic;
 import com.example.nvu7.readrss.model.HandlerMessage;
@@ -101,6 +102,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             .setColor(234,456,678,789)
                             .into(swipeRefreshLayout)
                             .init();
+                    //insert data to seach if is first
+                    if(recyclerView.getId()==R.id.list_item)
+                        RssService.getInstance().setAdapter((RecyclerViewAdapterRss)myAdapter);
                 }
                 //if is swiperefersh
                 else if(handlerMessage.getSwipeRefreshLayout()!=null)
@@ -203,6 +207,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
             @Override
             public boolean onQueryTextChange(String query) {
+                ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).getFilter().filter(query);
                 return true;
             }
             @Override

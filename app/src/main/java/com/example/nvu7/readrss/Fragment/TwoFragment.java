@@ -41,6 +41,10 @@ public class TwoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

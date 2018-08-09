@@ -5,10 +5,12 @@
     tools:context=".app.Main2Activity">
     <item
         android:id="@+id/action_settings"
-        android:title="seegd"
+        android:title=""
+
         app:showAsAction="never"
         app:actionLayout="@layout/switch_layout"
         android:actionLayout="@layout/switch_layout"
+
         />
     <item
         android:id="@+id/action_search"

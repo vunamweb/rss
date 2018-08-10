@@ -202,6 +202,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
+        MenuItem menuItem=menu.findItem(R.id.action_mode_view);
+        menuItem.setChecked(false);
         if(menu instanceof MenuBuilder){
             MenuBuilder m = (MenuBuilder) menu;
             //noinspection RestrictedApi
@@ -243,11 +245,29 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            return true;
-        }
+        switch (id)
+        {
+            case R.id.action_search:
+                return true;
+               // break;
+            case R.id.action_mode_view:
+            {
+               if(item.isChecked())
+               {
+                   item.setChecked(false);
+               }
+                else
+               {
+                   item.setChecked(true);
+               }
 
+            }
+        }
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_search) {
+//            return true;
+//        }
+//
         return super.onOptionsItemSelected(item);
     }
 

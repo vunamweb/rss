@@ -4,14 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".app.Main2Activity">
     <item
-        android:id="@+id/action_settings"
-        android:title=""
-
-        app:showAsAction="never"
-        app:actionLayout="@layout/switch_layout"
-        android:actionLayout="@layout/switch_layout"
-
-        />
+        android:id="@+id/action_mode_view"
+        android:title="@string/mode_view"
+        android:checkable="true"
+    />
     <item
         android:id="@+id/action_search"
         android:title="Search"
@@ -19,4 +15,17 @@
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView"
          />
+    <item
+        android:id="@+id/action_font_larger"
+        android:title=""
+        android:icon="@drawable/zoom_larger"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/action_font_small"
+        android:title=""
+        android:icon="@drawable/zoom_small"
+        app:showAsAction="always"
+
+        />
 </menu>

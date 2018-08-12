@@ -56,6 +56,7 @@ import java.util.List;
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, InterfaceFragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private Toolbar toolbar;
     Handler handler;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -65,6 +66,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //this.setTheme(R.style.AppTheme_NoActionBar_Drak);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
@@ -139,7 +141,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         };
         //
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -255,12 +257,33 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                if(item.isChecked())
                {
                    item.setChecked(false);
+                   tabLayout.setBackgroundColor(getResources().getColor(R.color.brown));
+                   toolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                   ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).setChangeColor(false);
+                   ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).notifyDataSetChanged();
+
                }
                 else
                {
                    item.setChecked(true);
+                   tabLayout.setBackgroundColor(getResources().getColor(R.color.black));
+                   toolbar.setBackgroundColor(getResources().getColor(R.color.black));
+                   ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).setChangeColor(true);
+                   ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).notifyDataSetChanged();
                }
 
+            }
+            case R.id.action_font_larger:
+            {
+                ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).setChangeFontSize(true);
+                ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).notifyDataSetChanged();
+                break;
+            }
+            case R.id.action_font_small:
+            {
+                ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).setChangeFontSize(false);
+                ((RecyclerViewAdapterRss)RssService.getInstance().getAdapter()).notifyDataSetChanged();
+                break;
             }
         }
         //noinspection SimplifiableIfStatement

@@ -7,11 +7,18 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ebe9a614</item>
+        <!--<item name="android:background">#f17997</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Drak">
+        <item name="android:textColor">#f45543</item>
+        <item name="android:background">#f17997</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

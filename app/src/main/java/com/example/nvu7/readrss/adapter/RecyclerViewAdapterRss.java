@@ -30,8 +30,29 @@ import java.util.List;
 
 public class RecyclerViewAdapterRss extends RecyclerViewAdapterBasic implements Filterable {
 
+    private Boolean changeColor;
+    private Boolean changeFontSize;
+
+    public void setChangeColor(Boolean changeColor) {
+        this.changeColor = changeColor;
+    }
+
+    public Boolean getChangeColor() {
+        return changeColor;
+    }
+
+    public void setChangeFontSize(Boolean changeFontSize) {
+        this.changeFontSize = changeFontSize;
+    }
+
+    public Boolean getChangeFontSize() {
+        return changeFontSize;
+    }
+
     public RecyclerViewAdapterRss(List<?> data, Context context) {
         super(data, context);
+        changeColor=false;
+        changeFontSize=false;
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,6 +86,23 @@ public class RecyclerViewAdapterRss extends RecyclerViewAdapterBasic implements 
                     Goto.startActivity(context, DetailActivity.class, bundle);
                 }
             });
+
+            if(changeColor)
+                holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.black));
+            else
+                holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.white));
+
+            if(changeFontSize)
+            {
+                ((RecyclerViewHolder) holder).txtTitle.setTextSize(context.getResources().getDimension(R.dimen.large_font_size));
+                ((RecyclerViewHolder) holder).txtDescription.setTextSize(context.getResources().getDimension(R.dimen.large_font_size));
+            }
+            else
+            {
+                ((RecyclerViewHolder) holder).txtTitle.setTextSize(context.getResources().getDimension(R.dimen.default_font_size));
+                ((RecyclerViewHolder) holder).txtDescription.setTextSize(context.getResources().getDimension(R.dimen.default_font_size));
+            }
+
         }
     }
 

@@ -16,14 +16,17 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorAccent"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            android:background="@color/brown"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/holo_blue_bright"
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.view.ViewPager
@@ -32,7 +35,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
-    <!--<include layout="@layout/content_main2" /> !-->
+    <include
+        layout="@layout/bottom_end"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        tools:layout_width="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

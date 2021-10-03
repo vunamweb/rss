@@ -1,4 +1,4 @@
-package com.example.nvu7.readrss;
+package com.vunam.nvu7.readrss;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.nvu7.readrss", appContext.getPackageName());
+        assertEquals("com.vunam.nvu7.readrss", appContext.getPackageName());
     }
 }

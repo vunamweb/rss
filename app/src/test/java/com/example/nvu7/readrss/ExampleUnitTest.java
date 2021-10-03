@@ -1,4 +1,4 @@
-package com.example.nvu7.readrss;
+package com.vunam.nvu7.readrss;
 
 import org.junit.Test;
 

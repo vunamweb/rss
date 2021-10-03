@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nvu7.readrss.Fragment.OneFragment">
+    tools:context="com.vunam.nvu7.readrss.com.vunam.nvu7.readrss.Fragment.OneFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

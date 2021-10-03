@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nvu7.readrss">
+    package="com.vunam.nvu7.readrss">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         >
         <activity
-            android:name=".app.Main2Activity"
+            android:name="com.vunam.nvu7.readrss.app.Main2Activity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="android.app.default_searchable"
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.DetailActivity"
+            android:name="com.vunam.nvu7.readrss.app.DetailActivity"
             android:label="Detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".app.SearchableActivity"
+            android:name="com.vunam.nvu7.readrss.app.SearchableActivity"
             android:label="@string/title_activity_searchable"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

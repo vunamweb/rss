@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.nvu7.readrss.app.DetailActivity">
+    tools:context="com.vunam.nvu7.readrss.com.vunam.nvu7.readrss.app.DetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
